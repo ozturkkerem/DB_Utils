@@ -1,13 +1,17 @@
-WebElement lastEntry = driver.findElement(By.xpath("//entry[last()]")); // Adjust this XPath to accurately target the last <entry> node or the specific point of insertion.
+JavascriptExecutor js = (JavascriptExecutor) driver;
+WebElement element = driver.findElement(By.xpath("your_xpath_here"));  // Replace with your actual XPath
 
-// Prepare the new entry XML string.
-String newEntryXml = "<entry key='newKey'>New String Here</entry>"; // Adjust 'newKey' and 'New String Here' as needed.
+// JavaScript to perform a click and then send an Enter key press
+String script = 
+    "var target = arguments[0];" +
+    "target.click();" +  // Simulate mouse click
+    "var event = new KeyboardEvent('keydown', {" +
+    "    key: 'Enter'," +
+    "    code: 'Enter'," +
+    "    bubbles: true" +
+    "});" +
+    "target.dispatchEvent(event);";  // Dispatch the Enter key event
 
-// JavaScript to create a new node and insert it after the last entry.
-String script = "var parser = new DOMParser();" +
-                "var newDoc = parser.parseFromString('" + newEntryXml + "', 'application/xml');" +
-                "var newEntry = document.importNode(newDoc.documentElement, true);" +
-                "arguments[0].parentNode.appendChild(newEntry);";  // This appends the new entry after the last entry within the same parent.
+js.executeScript(script, element);
 
-js.executeScript(script, lastEntry);
 
