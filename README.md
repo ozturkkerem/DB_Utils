@@ -1,10 +1,13 @@
-JavascriptExecutor js = (JavascriptExecutor) driver;
-WebElement lastEntry = driver.findElement(By.xpath("your_xpath_here")); // Update this XPath to correctly identify the last entry.
+WebElement lastEntry = driver.findElement(By.xpath("//entry[last()]")); // Adjust this XPath to accurately target the last <entry> node or the specific point of insertion.
 
-// Ensure the element type matches what's needed in the XML/HTML structure.
-String script = "var newElement = document.createElement('string');" +  // Assume 'string' is a valid element, change it if needed.
-                "newElement.textContent = 'New String Here';" +  // Use textContent for plain text.
-                "arguments[0].parentNode.appendChild(newElement);";  // Append to the parent of the last entry.
+// Prepare the new entry XML string.
+String newEntryXml = "<entry key='newKey'>New String Here</entry>"; // Adjust 'newKey' and 'New String Here' as needed.
+
+// JavaScript to create a new node and insert it after the last entry.
+String script = "var parser = new DOMParser();" +
+                "var newDoc = parser.parseFromString('" + newEntryXml + "', 'application/xml');" +
+                "var newEntry = document.importNode(newDoc.documentElement, true);" +
+                "arguments[0].parentNode.appendChild(newEntry);";  // This appends the new entry after the last entry within the same parent.
 
 js.executeScript(script, lastEntry);
 
