@@ -1,8 +1,5 @@
-String script = "arguments[0].click();" +
-                "var event = new KeyboardEvent('keydown', {'key': 'Enter', 'bubbles': true});" +
-                "arguments[0].dispatchEvent(event);";
+String script = "var newElem = document.createElement('li'); newElem.textContent = 'Happy MONDAYSSS 00000000000 FOR MINASANNNN'; var parent = arguments[0].parentNode; if (arguments[0].nextSibling) { parent.insertBefore(newElem, arguments[0].nextSibling); } else { parent.appendChild(newElem); }";
 
-js.executeScript(script, entry);
 
 
 
