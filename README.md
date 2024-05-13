@@ -1,9 +1,23 @@
 # DB_Utils
+var newElement = document.createElement('div');
+newElement.innerHTML = '<String>New String Here</String>';
+if (targetElement.nextSibling) {
+    targetElement.parentNode.insertBefore(newElement.firstChild, targetElement.nextSibling);
+} else {
+    targetElement.parentNode.appendChild(newElement.firstChild);
+}
 
-// Script to create a new 'String' XML element below the last one
-String newXmlLine = "<String>New String Here</String>";  // Adjust this line to match the XML structure you need
-String script = "var newElement = document.createElement('div');" +
-                "newElement.innerHTML = '" + newXmlLine + "';" +
-                "arguments[0].parentNode.insertBefore(newElement.firstChild, arguments[0].nextSibling.nextSibling);";
+JavascriptExecutor js = (JavascriptExecutor) driver;
+WebElement lastEntry = driver.findElement(By.xpath("//String[contains(text(), 'Your Last String')]"));  // Adjust this to target the last string you added
+
+String script = "var targetElement = arguments[0];" +
+                "var newElement = document.createElement('div');" +
+                "newElement.innerHTML = '<String>New String Here</String>';" +
+                "if (targetElement.nextSibling) {" +
+                "    targetElement.parentNode.insertBefore(newElement.firstChild, targetElement.nextSibling);" +
+                "} else {" +
+                "    targetElement.parentNode.appendChild(newElement.firstChild);" +
+                "}";
 
 js.executeScript(script, lastEntry);
+
